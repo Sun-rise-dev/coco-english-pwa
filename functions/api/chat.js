@@ -6,7 +6,7 @@ export async function onRequest(ctx) {
   try {
     const { messages } = await ctx.request.json();
     if (!messages?.length) return new Response('missing', { status: 400 });
-    const key = ctx.env.ANTHROPIC_API_KEY;
+    const key = ctx.env.DEEPSEEK_API_KEY || ctx.env.ANTHROPIC_API_KEY;
     if (!key) return new Response(JSON.stringify({ error: 'no key' }), { status: 500 });
     const r = await fetch('https://api.deepseek.com/chat/completions', {
       method: 'POST',
