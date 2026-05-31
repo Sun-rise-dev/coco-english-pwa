@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220">
+  <defs>
+    <style> rect { shape-rendering: crispEdges; } </style>
+    <!-- 暖色渐变背景 -->
+    <radialGradient id="bg" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF5EE"/>
+      <stop offset="100%" stop-color="#FFE8D6"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 背景圆 -->
+  <circle cx="110" cy="108" r="100" fill="url(#bg)" stroke="#E89878" stroke-width="2.5"/>
+
+  <!-- 螃蟹像素 (16×14 网格, 每像素 8px → 128×112, 居中) -->
+  <!-- 左上角原点: x=46, y=52 (使 body 居中于 220x220 canvas) -->
+  <g transform="translate(46, 52)">
+    <!-- 六条腿 -->
+    <rect x="16" y="72" width="8" height="8" fill="#E89878"/>
+    <rect x="8" y="80" width="8" height="8" fill="#E89878"/>
+    <rect x="16" y="88" width="8" height="8" fill="#E89878"/>
+    <rect x="104" y="72" width="8" height="8" fill="#E89878"/>
+    <rect x="112" y="80" width="8" height="8" fill="#E89878"/>
+    <rect x="104" y="88" width="8" height="8" fill="#E89878"/>
+
+    <!-- 左钳 -->
+    <!-- Row 0 -->
+    <rect x="-8" y="36" width="8" height="8" fill="#E89878"/>
+    <rect x="0" y="36" width="8" height="8" fill="#E89878"/>
+    <!-- Row 1 -->
+    <rect x="-8" y="44" width="8" height="8" fill="#E89878"/>
+    <rect x="0" y="44" width="8" height="8" fill="#FFB088"/>
+    <rect x="8" y="44" width="8" height="8" fill="#E89878"/>
+    <!-- Row 2 -->
+    <rect x="-8" y="52" width="8" height="8" fill="#E89878"/>
+    <rect x="0" y="52" width="8" height="8" fill="#FFB088"/>
+    <rect x="8" y="52" width="8" height="8" fill="#FFB088"/>
+    <rect x="16" y="52" width="8" height="8" fill="#E89878"/>
+    <!-- Row 3 -->
+    <rect x="0" y="60" width="8" height="8" fill="#E89878"/>
+    <rect x="8" y="60" width="8" height="8" fill="#FFB088"/>
+    <rect x="16" y="60" width="8" height="8" fill="#FFB088"/>
+    <!-- Row 4 -->
+    <rect x="-8" y="68" width="8" height="8" fill="#E89878"/>
+    <rect x="0" y="68" width="8" height="8" fill="#E89878"/>
+
+    <!-- 右钳 -->
+    <!-- Row 0 -->
+    <rect x="120" y="36" width="8" height="8" fill="#E89878"/>
+    <rect x="128" y="36" width="8" height="8" fill="#E89878"/>
+    <!-- Row 1 -->
+    <rect x="120" y="44" width="8" height="8" fill="#E89878"/>
+    <rect x="128" y="44" width="8" height="8" fill="#FFB088"/>
+    <rect x="136" y="44" width="8" height="8" fill="#E89878"/>
+    <!-- Row 2 -->
+    <rect x="112" y="52" width="8" height="8" fill="#E89878"/>
+    <rect x="120" y="52" width="8" height="8" fill="#FFB088"/>
+    <rect x="128" y="52" width="8" height="8" fill="#FFB088"/>
+    <rect x="136" y="52" width="8" height="8" fill="#E89878"/>
+    <!-- Row 3 -->
+    <rect x="112" y="60" width="8" height="8" fill="#FFB088"/>
+    <rect x="120" y="60" width="8" height="8" fill="#FFB088"/>
+    <rect x="128" y="60" width="8" height="8" fill="#E89878"/>
+    <!-- Row 4 -->
+    <rect x="120" y="68" width="8" height="8" fill="#E89878"/>
+    <rect x="128" y="68" width="8" height="8" fill="#E89878"/>
+
+    <!-- 身体 — 完全匹配 BASE 16×14 网格 -->
+    <!-- Row 0: t t t t t D D D D D D t t t t t -->
+    <rect x="32" y="0" width="56" height="8" fill="#E89878"/>
+
+    <!-- Row 1: t t t t D O O O O O O D t t t t -->
+    <rect x="24" y="8" width="8" height="8" fill="#E89878"/>
+    <rect x="32" y="8" width="56" height="8" fill="#FFB088"/>
+    <rect x="88" y="8" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 2: t t t D O O O O O O O O D t t t -->
+    <rect x="16" y="16" width="8" height="8" fill="#E89878"/>
+    <rect x="24" y="16" width="72" height="8" fill="#FFB088"/>
+    <rect x="96" y="16" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 3: t t D O O O L O O L O O O D t t -->
+    <rect x="8" y="24" width="8" height="8" fill="#E89878"/>
+    <rect x="16" y="24" width="24" height="8" fill="#FFB088"/>
+    <rect x="40" y="24" width="8" height="8" fill="#FFD0B8"/>
+    <rect x="48" y="24" width="8" height="8" fill="#FFB088"/>
+    <rect x="56" y="24" width="8" height="8" fill="#FFB088"/>
+    <rect x="64" y="24" width="8" height="8" fill="#FFD0B8"/>
+    <rect x="72" y="24" width="24" height="8" fill="#FFB088"/>
+    <rect x="96" y="24" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 4: t t D O O L O O O O L O O D t t -->
+    <rect x="8" y="32" width="8" height="8" fill="#E89878"/>
+    <rect x="16" y="32" width="8" height="8" fill="#FFB088"/>
+    <rect x="24" y="32" width="8" height="8" fill="#FFB088"/>
+    <rect x="32" y="32" width="8" height="8" fill="#FFD0B8"/>
+    <rect x="40" y="32" width="32" height="8" fill="#FFB088"/>
+    <rect x="72" y="32" width="8" height="8" fill="#FFD0B8"/>
+    <rect x="80" y="32" width="8" height="8" fill="#FFB088"/>
+    <rect x="88" y="32" width="8" height="8" fill="#FFB088"/>
+    <rect x="96" y="32" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 5: t D O O O D D D D D D O O O D t -->
+    <rect x="0" y="40" width="8" height="8" fill="#E89878"/>
+    <rect x="8" y="40" width="24" height="8" fill="#FFB088"/>
+    <rect x="32" y="40" width="8" height="8" fill="#E89878"/>
+    <rect x="40" y="40" width="48" height="8" fill="#E89878"/>
+    <rect x="88" y="40" width="8" height="8" fill="#E89878"/>
+    <rect x="96" y="40" width="24" height="8" fill="#FFB088"/>
+    <rect x="120" y="40" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 6 (眼睛行): t D O O D W W W W W W D O O D t -->
+    <rect x="0" y="48" width="8" height="8" fill="#E89878"/>
+    <rect x="8" y="48" width="16" height="8" fill="#FFB088"/>
+    <rect x="24" y="48" width="8" height="8" fill="#E89878"/>
+    <rect x="32" y="48" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="40" y="48" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="48" y="48" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="56" y="48" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="64" y="48" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="72" y="48" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="80" y="48" width="8" height="8" fill="#E89878"/>
+    <rect x="88" y="48" width="16" height="8" fill="#FFB088"/>
+    <rect x="104" y="48" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 7: t D O L D W B B S B W D L O D t -->
+    <rect x="0" y="56" width="8" height="8" fill="#E89878"/>
+    <rect x="8" y="56" width="8" height="8" fill="#FFB088"/>
+    <rect x="16" y="56" width="8" height="8" fill="#FFD0B8"/>
+    <rect x="24" y="56" width="8" height="8" fill="#E89878"/>
+    <rect x="32" y="56" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="40" y="56" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="48" y="56" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="56" y="56" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="64" y="56" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="72" y="56" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="80" y="56" width="8" height="8" fill="#E89878"/>
+    <rect x="88" y="56" width="8" height="8" fill="#FFD0B8"/>
+    <rect x="96" y="56" width="8" height="8" fill="#FFB088"/>
+    <rect x="104" y="56" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 8: t D O O D W B B B B W D O O D t -->
+    <rect x="0" y="64" width="8" height="8" fill="#E89878"/>
+    <rect x="8" y="64" width="16" height="8" fill="#FFB088"/>
+    <rect x="24" y="64" width="8" height="8" fill="#E89878"/>
+    <rect x="32" y="64" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="40" y="64" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="48" y="64" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="56" y="64" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="64" y="64" width="8" height="8" fill="#3D2B2B"/>
+    <rect x="72" y="64" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="80" y="64" width="8" height="8" fill="#E89878"/>
+    <rect x="88" y="64" width="16" height="8" fill="#FFB088"/>
+    <rect x="104" y="64" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 9: t t D O D W W W W W W D O D t t -->
+    <rect x="8" y="72" width="8" height="8" fill="#E89878"/>
+    <rect x="16" y="72" width="8" height="8" fill="#FFB088"/>
+    <rect x="24" y="72" width="8" height="8" fill="#E89878"/>
+    <rect x="32" y="72" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="40" y="72" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="48" y="72" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="56" y="72" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="64" y="72" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="72" y="72" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="80" y="72" width="8" height="8" fill="#E89878"/>
+    <rect x="88" y="72" width="8" height="8" fill="#FFB088"/>
+    <rect x="96" y="72" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 10: t t D O O D D D D D D O O D t t -->
+    <rect x="8" y="80" width="8" height="8" fill="#E89878"/>
+    <rect x="16" y="80" width="16" height="8" fill="#FFB088"/>
+    <rect x="32" y="80" width="56" height="8" fill="#E89878"/>
+    <rect x="88" y="80" width="16" height="8" fill="#FFB088"/>
+    <rect x="104" y="80" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 11: t t t D O O O P P O O O D t t t -->
+    <rect x="16" y="88" width="8" height="8" fill="#E89878"/>
+    <rect x="24" y="88" width="24" height="8" fill="#FFB088"/>
+    <rect x="48" y="88" width="8" height="8" fill="#FFC8C8"/>
+    <rect x="56" y="88" width="8" height="8" fill="#FFC8C8"/>
+    <rect x="64" y="88" width="24" height="8" fill="#FFB088"/>
+    <rect x="88" y="88" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 12: t t t t D O O O M O O D t t t t -->
+    <rect x="24" y="96" width="8" height="8" fill="#E89878"/>
+    <rect x="32" y="96" width="24" height="8" fill="#FFB088"/>
+    <rect x="56" y="96" width="8" height="8" fill="#D08070"/>
+    <rect x="64" y="96" width="24" height="8" fill="#FFB088"/>
+    <rect x="88" y="96" width="8" height="8" fill="#E89878"/>
+
+    <!-- Row 13: t t t t t D D D O D D t t t t t -->
+    <rect x="32" y="104" width="24" height="8" fill="#E89878"/>
+    <rect x="56" y="104" width="8" height="8" fill="#FFB088"/>
+    <rect x="64" y="104" width="24" height="8" fill="#E89878"/>
+  </g>
+</svg>
