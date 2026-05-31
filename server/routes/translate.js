@@ -1,69 +1,42 @@
-// 翻译路由 — 纯翻译模式 (中文 → 地道口语英文)
+// Translate API — DeepSeek
 const { Router } = require('express');
-const Anthropic = require('@anthropic-ai/sdk');
-
 const router = Router();
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const S = `You translate Chinese to British English.
 
-const TRANSLATE_PROMPT = `You are a translator. Translate the user's Chinese into natural, spoken British English.
-
-RULES:
-- Output ONLY this format, nothing else:
-  [中文原文 → English translation]
-  (中文: English phrase → 中文注释)
-- The translation must be natural spoken English, not textbook formal
-- Use British expressions: "fancy", "reckon", "mate", "lovely", "cheers", "blimey", "proper"
-- Keep it concise and conversational
-- NEVER add explanations, greetings, or extra text
-
-Examples:
-Input: 你好
-Output:
-[你好 → Hiya]
-(中文: hiya → 你好呀)
-
-Input: 今天天气真好
-Output:
-[今天天气真好 → Lovely weather today innit]
-(中文: lovely weather → 天气真好)`;
-
+FORMAT:
+[中文 → English]
+(中文: English → Chinese)
+No other text.`;
 
 router.post('/translate', async (req, res) => {
   try {
     const { text } = req.body;
-    if (!text || typeof text !== 'string') return res.status(400).json({ error: '缺少 text' });
-
+    if (!text) return res.status(400).json({ error: 'missing' });
+    const key = process.env.DEEPSEEK_API_KEY || process.env.ANTHROPIC_API_KEY;
+    if (!key) return res.status(500).json({ error: 'no key' });
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
     res.setHeader('X-Accel-Buffering', 'no');
-
-    const stream = anthropic.messages.stream({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 256,
-      system: TRANSLATE_PROMPT,
-      messages: [{ role: 'user', content: text }],
+    const r = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+      body: JSON.stringify({ model: 'deepseek-chat', max_tokens: 300, temperature: 0.8, messages: [{ role: 'system', content: S }, { role: 'user', content: text }], stream: true }),
     });
-
-    let full = '';
-    stream.on('text', (delta) => {
-      full += delta;
-      res.write(`data: ${JSON.stringify({ delta })}\n\n`);
-    });
-    stream.on('end', () => {
-      res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-      res.end();
-    });
-    stream.on('error', (err) => {
-      console.error('翻译错误:', err);
-      res.write(`data: ${JSON.stringify({ error: '翻译失败' })}\n\n`);
-      res.end();
-    });
-  } catch (err) {
-    console.error('翻译请求错误:', err);
-    if (!res.headersSent) return res.status(500).json({ error: '服务器错误' });
-    res.end();
-  }
+    if (!r.ok) { if(!res.headersSent) return res.status(502).json({ error: 'AI err' }); res.end(); return; }
+    const rd = r.body.getReader(); const d = new TextDecoder(); let b = '';
+    (async function pump() {
+      while(true) {
+        const { done, v } = await rd.read();
+        if (done) { res.write('data: {"done":true}\n\n'); res.end(); return; }
+        b += d.decode(v, { stream: true }); const ls = b.split('\n'); b = ls.pop();
+        for (const l of ls) {
+          if (!l.startsWith('data: ')) continue;
+          const j = l.slice(6).trim(); if (j === '[DONE]') { res.write('data: {"done":true}\n\n'); continue; }
+          try { const x = JSON.parse(j); const t = x.choices?.[0]?.delta?.content; if (t) res.write(`data: ${JSON.stringify({ delta: t })}\n\n`); } catch {}
+        }
+      }
+    })();
+  } catch(e) { console.error(e.message); if(!res.headersSent) res.status(500).json({ error: 'err' }); }
 });
 
 module.exports = router;
