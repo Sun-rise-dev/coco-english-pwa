@@ -29,7 +29,7 @@ export default function Header({ onOpenSettings }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             {/* 品牌图标 — SVG 螃蟹 logo */}
-            <svg viewBox="0 0 32 32" width="32" height="32" className="flex-shrink-0">
+            <svg viewBox="0 0 32 32" width="32" height="32" className="flex-shrink-0" role="img" aria-label="Coco logo">
               <ellipse cx="16" cy="17" rx="12" ry="10" fill="#FF7B4A" />
               <ellipse cx="12" cy="14" rx="3.5" ry="4" fill="white" />
               <ellipse cx="20" cy="14" rx="3.5" ry="4" fill="white" />

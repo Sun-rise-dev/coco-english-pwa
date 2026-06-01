@@ -15,8 +15,11 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // 中间件配置
+const corsOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',').map(s => s.trim())
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://192.168.1.13:5173'],
+  origin: corsOrigins,
   methods: ['GET', 'POST'],
 }));
 app.use(express.json());   // 解析 JSON 请求体

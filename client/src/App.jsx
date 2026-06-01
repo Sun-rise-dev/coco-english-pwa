@@ -10,6 +10,7 @@ import TranslateView from './components/TranslateView'
 import VocabReview from './components/VocabReview'
 import InputBar from './components/InputBar'
 import SettingsDrawer from './components/SettingsDrawer'
+import ErrorBoundary from './components/ErrorBoundary'
 import useChatStore from './store/chatStore'
 
 export default function App() {
@@ -75,13 +76,15 @@ export default function App() {
       {!splashDone && <SplashScreen onDone={handleSplashDone} />}
       <div className="max-w-lg mx-auto h-[100dvh] flex flex-col bg-sand-50 dark:bg-surface-dark overflow-hidden shadow-2xl relative">
         <Header onOpenSettings={() => setSettingsOpen(true)} />
-        {isChat && <StatsBar />}
-        {isChat && <CrabCharacter mood={crabMood} />}
-        {isChat && <TopicChips />}
-        {isChat && <ChatArea />}
-        {isTranslate && <TranslateView />}
-        {!isChat && !isTranslate && <VocabReview />}
-        {isChat && <InputBar />}
+        <ErrorBoundary>
+          {isChat && <StatsBar />}
+          {isChat && <CrabCharacter mood={crabMood} />}
+          {isChat && <TopicChips />}
+          {isChat && <ChatArea />}
+          {isTranslate && <TranslateView />}
+          {!isChat && !isTranslate && <VocabReview />}
+          {isChat && <InputBar />}
+        </ErrorBoundary>
         <SettingsDrawer isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </div>
     </>

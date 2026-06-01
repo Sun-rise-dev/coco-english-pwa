@@ -4,11 +4,20 @@
 // messages: [{ role, content }, ...]
 // 返回: ReadableStream reader (用于流式读取 AI 回复)
 export async function sendChatMessage(messages, sessionId = 'default') {
-  const response = await fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages, sessionId }),
-  })
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 30000)
+
+  let response
+  try {
+    response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, sessionId }),
+      signal: controller.signal,
+    })
+  } finally {
+    clearTimeout(timeoutId)
+  }
 
   // 检查 HTTP 错误
   if (!response.ok) {
@@ -17,36 +26,36 @@ export async function sendChatMessage(messages, sessionId = 'default') {
   }
 
   // 返回流式响应的 body reader
-  // 调用方通过 reader.read() 逐块获取 SSE 数据
   return response.body.getReader()
 }
 
-// 解析 SSE 数据块 — 从二进制流中提取 JSON 事件
-// 只处理完整的 SSE 事件 (以 \n\n 结尾), 返回 { events, remaining }
-// remaining 是不完整的事件片段, 需要和后续 chunk 拼接
+// 解析 SSE 并统一为 { delta, done?, error? } 格式
+// 兼容本地服务器 (Anthropic 格式) 和 Cloudflare (OpenAI/DeepSeek 格式)
 export function parseSSEChunk(chunk) {
   const text = new TextDecoder().decode(chunk)
   const events = []
-
-  // SSE 事件以 \n\n 分隔, 只处理完整的事件
+  // SSE 事件以 \n\n 分隔
   const parts = text.split('\n\n')
-  // 最后一段可能是未完成的, 不处理
   const complete = parts.slice(0, -1)
-
   for (const part of complete) {
     const lines = part.split('\n')
     for (const line of lines) {
       if (line.startsWith('data: ')) {
         try {
-          const data = JSON.parse(line.slice(6))
-          events.push(data)
-        } catch {
-          // 忽略解析失败
-        }
+          const raw = JSON.parse(line.slice(6))
+          // 统一为我们的格式
+          if (raw.choices?.[0]?.delta?.content) {
+            // OpenAI/DeepSeek 格式 → 提取 delta
+            events.push({ delta: raw.choices[0].delta.content })
+          } else if (raw.delta !== undefined || raw.done !== undefined || raw.error !== undefined) {
+            // 本地服务器格式 (已经是标准格式)
+            events.push(raw)
+          }
+          // 忽略其他格式
+        } catch { /* 忽略 */ }
       }
     }
   }
-
   return events
 }
 

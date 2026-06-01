@@ -4,8 +4,8 @@ const WebSocket = require('ws');
 
 const router = Router();
 
-// Edge TTS 配置
-const TOKEN = '6A5AA1D4EAFF4E9FB37E23D68491D6F4';
+// Edge TTS 配置 (Token 从环境变量读取)
+const TOKEN = process.env.TTS_TOKEN;
 const WS_URL = `wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=${TOKEN}`;
 
 function uuid() {
@@ -74,9 +74,12 @@ function escapeXml(s) {
 
 router.post('/tts', async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text } = req.body
     if (!text || typeof text !== 'string') {
-      return res.status(400).json({ error: '缺少 text 参数' });
+      return res.status(400).json({ error: '缺少 text 参数' })
+    }
+    if (text.length > 5000) {
+      return res.status(400).json({ error: 'text 超过最大长度 5000 字符' })
     }
 
     const audioBuffer = await synthesize(text);

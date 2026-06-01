@@ -97,16 +97,14 @@ export function useSpeech() {
       setCrabSpeaking(false)
       setSpeakingMessageId(null)
     }
-    u.onend = finish
-    u.onerror = (e) => { console.warn('TTS error:', e.error); finish() }
-    window.speechSynthesis.speak(u)
+    // 正常结束时清除超时
     const timer = setTimeout(() => {
       if (!done) { console.warn('TTS timeout'); finish() }
     }, 30000)
-    // 正常结束时清除超时 — 用新的包装函数
     const onDone = () => { clearTimeout(timer); finish() }
     u.onend = onDone
     u.onerror = (e) => { console.warn('TTS error:', e.error); onDone() }
+    window.speechSynthesis.speak(u)
   }, [stop, setCrabSpeaking])
 
   return { speak, stop, isSpeaking, speakingMessageId }

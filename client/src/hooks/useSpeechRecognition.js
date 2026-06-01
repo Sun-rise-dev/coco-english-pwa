@@ -96,13 +96,12 @@ export default function useSpeechRecognition() {
     setFinalTranscript('')
     setInterimTranscript('')
 
-    if (!recognitionRef.current) {
-      recognitionRef.current = initRecognition()
-    }
+    // 每次开始都重新创建实例, 确保 errorCount 归零
+    recognitionRef.current = initRecognition()
 
     const rec = recognitionRef.current
     if (rec) {
-      rec.lang = languageRef.current // 用 ref 确保拿到最新语言
+      rec.lang = languageRef.current
       try {
         rec.start()
         setIsListening(true)

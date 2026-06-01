@@ -1,14 +1,17 @@
 {
-  "name": "sayhi-eeay",
+  "name": "coco-english-pwa",
   "version": "1.0.0",
-  "description": "对话式英语学习 PWA — 内置 AI 螃蟹伙伴 SayHi",
+  "description": "Coco - AI English learning PWA with Claude-powered chat",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && node index.js",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm install && npm run build",
     "start": "cd server && node index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
